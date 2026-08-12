@@ -3,12 +3,18 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class Settings(BaseSettings):
     # API Keys
-    OPENAI_API_KEY: str = ""
-    QDRANT_URL: str = "http://localhost:6333"
-    SQLITE_PATH: str = "storage/metadata.db"
-
-    EMBEDDING_MODEL: str = "text-embedding-3-large"
+    OPENAI_API_KEY: str 
+    EMBEDDING_MODEL: str
     CHAT_MODEL: str = "gpt-4.1-mini"
+    
+    #QDRANT settings
+    QDRANT_URL: str
+    QDRANT_COLLECTION: str
+    EMBED_DIM: int
+    
+    # Storage settings
+    SQLITE_PATH: str = "storage/metadata.db"
+    UPLOAD_DIR: str = "storage/uploads"
     
     # RAG settings
     CHUNK_SIZE: int = 1000
