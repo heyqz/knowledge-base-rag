@@ -22,8 +22,9 @@ node_modules/
 # Database
 *.db
 
-# Uploads
+# Uploads & test data
 uploads/
+test_data/
 
 # Qdrant
 qdrant_storage/
