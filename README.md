@@ -1,9 +1,34 @@
-## Current Features
+✅ Backend Foundation
+FastAPI project structure
+Configuration management (.env + Settings)
+Logging
+Health API
 
-- ✅ Upload PDF
-- ✅ Store document metadata
-- ✅ Local file storage
-- ✅ SQLite metadata repository
-- ✅ Document CRUD API
-- ✅ React Frontend
-- ✅ FastAPI Backend
+✅ Document Management
+File upload
+SQLite metadata storage
+Document repository
+Document service
+
+✅ Ingestion Pipeline
+PDF Loader
+Recursive Character Chunking
+OpenAI Embeddings
+Qdrant Vector Store
+End-to-End Pipeline
+Integration Tests
+
+                Upload API
+                     │
+                     ▼
+              Save Document
+                     │
+                     ▼
+            Ingestion Pipeline
+                     │
+      ┌──────────────┼──────────────┐
+      ▼              ▼              ▼
+ PDF Loader   Recursive Chunker   OpenAI Embedder
+                                         │
+                                         ▼
+                                   Qdrant Index
