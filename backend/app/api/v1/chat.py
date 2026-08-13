@@ -1,14 +1,16 @@
 from fastapi import APIRouter
 
 from app.models.chat import ChatRequest, ChatResponse
+from app.services.chat_service import ChatService
 
 router = APIRouter(
     prefix="/chat",
     tags=["Chat"],
 )
 
+chat_service = ChatService()
 
-@router.post("/")
-async def chat(request: ChatRequest):
-    # Placeholder implementation - replace with actual chat logic
-    return ChatResponse(answer="Not implemented yet.", sources=[])
+
+@router.post("", response_model=ChatResponse)
+def chat(request: ChatRequest)-> ChatResponse:
+    return chat_service.chat(request.question)

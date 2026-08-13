@@ -4,6 +4,7 @@ from qdrant_client.models import Distance, VectorParams, PointStruct
 
 from app.core.config import settings
 from app.storage.vector_repository import VectorRepository
+from app.models.retrieved_chunk import RetrievedChunk
 
 
 class QdrantRepository(VectorRepository):
@@ -55,6 +56,22 @@ class QdrantRepository(VectorRepository):
     
         print(f"Upsert result: {result}")
 
-    def search(self,query_vector: list[float],limit: int):
-
-        raise NotImplementedError
+    def search(self,query_vector: list[float],limit: int = 5):
+        result = self.client.query_points(
+            collection_name=self.collection_name,
+            query=query_vector,
+            limit=limit,
+        )
+        
+        chunks = []
+        for point in result.points:
+            payload = point.payload or {}
+            chunk = RetrievedChunk(
+                text=payload.get("text", ""),
+                score=point.score,
+                page=payload.get("page"),
+                source=payload.get("source"),
+                document_id=payload.get("document_id"),
+            )
+            chunks.append(chunk)
+        return chunks

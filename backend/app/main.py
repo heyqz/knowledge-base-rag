@@ -2,6 +2,8 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.api.v1.router import api_router
+from app.api.v1.chat import router as chat_router
+
 
 app = FastAPI(
     title="Knowledge RAG API",
@@ -19,3 +21,4 @@ app.add_middleware(
 )
 
 app.include_router(api_router)
+app.include_router(chat_router)
