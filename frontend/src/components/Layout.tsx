@@ -10,8 +10,9 @@ export default function Layout() {
       }}
     >
       <Sidebar />
-
-      <ChatPanel />
+      <div style={{ flex: 1 }}>      
+        <ChatPanel />
+      </div>
     </div>
   );
 }

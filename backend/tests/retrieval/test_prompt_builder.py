@@ -16,7 +16,6 @@ def test_prompt_builder():
         chunks=chunks,
     )
     
-    print(prompt)
 
     assert "20 days of PTO" in prompt
     assert "How many PTO" in prompt

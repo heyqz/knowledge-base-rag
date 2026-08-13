@@ -9,6 +9,5 @@ def test_load_pdf():
     assert isinstance(docs[0], Document)
     assert docs[0].page_content.strip() != ""
 
-    print(f"Loaded {len(docs)} pages")
 
     print(docs[0].page_content[:300])

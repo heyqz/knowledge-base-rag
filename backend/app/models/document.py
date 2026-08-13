@@ -1,5 +1,11 @@
 from pydantic import BaseModel
 from datetime import datetime
+from enum import Enum
+
+
+class DocumentStatus(str, Enum):
+    INDEXED = "indexed"
+    UPLOADED = "uploaded"
 
 
 class Document(BaseModel):
@@ -8,14 +14,14 @@ class Document(BaseModel):
     original_filename: str
     file_path: str
     file_size: int
-    status: str
+    status: DocumentStatus
     uploaded_at: datetime
 
 
 class DocumentResponse(BaseModel):
     id: str
     filename: str
-    status: str
+    status: DocumentStatus
     uploaded_at: datetime
 
 

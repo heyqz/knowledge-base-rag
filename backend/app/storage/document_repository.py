@@ -78,6 +78,12 @@ class DocumentRepository:
             )
 
         return documents
+    
+    def update_status(self, document_id: str, status: str):
+        db.execute(
+            "UPDATE documents SET status = ? WHERE id = ?",
+            (status, document_id),
+        )
 
     def delete(self, document_id: str):
         db.execute(

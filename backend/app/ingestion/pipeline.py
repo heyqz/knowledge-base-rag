@@ -6,6 +6,8 @@ from app.embedding.openai_embedder import OpenAIEmbedder
 from app.ingestion.chunkers.recursive import RecursiveChunker
 from app.ingestion.loader import PDFLoader
 from app.storage.qdrant_repository import QdrantRepository
+from app.models.document import Document
+from app.core.config import settings
 
 
 class IngestionPipeline:
@@ -18,29 +20,27 @@ class IngestionPipeline:
         repository: QdrantRepository | None = None,
     ):
         self.loader = loader or PDFLoader()
-        self.chunker = chunker or RecursiveChunker(...)
-        self.embedder = embedder or OpenAIEmbedder()
+        self.chunker = chunker or RecursiveChunker()
+        self.embedder = embedder or OpenAIEmbedder(settings.EMBEDDING_MODEL)
         self.repository = repository or QdrantRepository()
         
     def ingest(
         self,
-        pdf_path: str | Path,
-    ):
+        document: Document,
+    ) -> None:
         """Ingest a PDF file into the vector repository."""
 
         # Load the PDF
-        document = self.loader.load(pdf_path)
+        loaded_document = self.loader.load(document.file_path)
 
         # Chunk the document
-        chunks = self.chunker.split(document)
+        chunks = self.chunker.split(loaded_document)
         
         texts = [chunk.page_content for chunk in chunks]
         
         # Embed the texts
         vectors = self.embedder.embed(texts)
         
-        print(f"Generated {len(vectors)} embeddings")
-
         ids = [str(uuid.uuid4()) for _ in chunks]
         
         payloads = []
@@ -49,13 +49,13 @@ class IngestionPipeline:
 
             payloads.append(
                 {
+                    "document_id": document.id,
+                    "filename": document.original_filename,
                     "text": chunk.page_content,
-
                     **chunk.metadata,
                 }
             )
             
-        print("Calling repository.upsert...")
             
         self.repository.upsert(
             ids=ids,
@@ -63,6 +63,4 @@ class IngestionPipeline:
             payloads=payloads,
         )
         
-        print("Upsert finished!")
-        
-        return len(chunks)
+        return 

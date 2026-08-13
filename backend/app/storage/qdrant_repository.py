@@ -36,7 +36,6 @@ class QdrantRepository(VectorRepository):
         )
 
     def upsert(self,ids: list[str],vectors: list[list[float]], payloads: list[dict]) -> None:
-        print(f"Upserting {len(ids)} vectors")
         if not (len(ids) == len(vectors) == len(payloads)):
             raise ValueError("ids, vectors and payloads must have the same length.")
 
@@ -54,7 +53,6 @@ class QdrantRepository(VectorRepository):
             points=points
         )
     
-        print(f"Upsert result: {result}")
 
     def search(self,query_vector: list[float],limit: int = 5):
         result = self.client.query_points(

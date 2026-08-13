@@ -1,3 +1,4 @@
+from datetime import datetime
 from pathlib import Path
 
 from qdrant_client import QdrantClient
@@ -8,6 +9,7 @@ from app.ingestion.loader import PDFLoader
 from app.ingestion.pipeline import IngestionPipeline
 from app.storage.qdrant_repository import QdrantRepository
 from app.core.config import settings
+from app.models.document import Document
 
 
 def test_ingestion_pipeline():
@@ -25,15 +27,36 @@ def test_ingestion_pipeline():
         repository=repository,
     )
 
-    chunk_count = pipeline.ingest(
-        Path("test_data/Pelican Welcome Letter.pdf")
+    doc = Document(
+        id="test-id",
+        filename="sample.pdf",
+        original_filename="sample.pdf",
+        file_path=str(Path("test_data/Pelican Welcome Letter.pdf")),
+        file_size=0,
+        status="uploaded",
+        uploaded_at=datetime.utcnow(),
     )
-
-    assert chunk_count > 0
     
-    points, _ = client.scroll(
-        collection_name=repository.collection_name,
-        limit=100,
-    )
+    
 
-    assert len(points) == chunk_count
+    before_points, _ = client.scroll(
+    collection_name=repository.collection_name,
+    limit=100,
+)
+
+    before = len(before_points) 
+    pipeline.ingest(
+            document=doc
+        )
+    
+    after_points, _ = client.scroll(
+    collection_name=repository.collection_name,
+    limit=100,
+)
+
+    after = len(after_points)
+
+    assert after > before
+    
+    assert any(point.payload["document_id"] == "test-id"
+               for point in after_points)

@@ -7,7 +7,6 @@ def test_chat_service():
         "What is this document about?"
     )
 
-    print(answer)
 
     assert len(answer.answer) > 0
     assert answer.retrieved_chunks > 0
