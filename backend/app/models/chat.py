@@ -5,10 +5,11 @@ class ChatRequest(BaseModel):
 
 
 class Source(BaseModel):
-    document: str
+    filename: str
     page: int
+    score: float
 
 class ChatResponse(BaseModel):
     answer: str
-    retrieved_chunks: int    
-    # sources: list[Source]
+    # retrieved_chunks: int    
+    sources: list[Source]

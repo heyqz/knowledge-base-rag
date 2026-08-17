@@ -1,18 +1,29 @@
-import { apiFetch } from "./api";
-import type {
-  DocumentListResponse,
-} from "../types/document";
+import type { DocumentListResponse } from "@/types/document";
 
-export function listDocuments() {
-  return apiFetch<DocumentListResponse>("/documents");
+const BASE_URL = "http://localhost:8000";
+
+export async function getDocuments(): Promise<DocumentListResponse> {
+  const response = await fetch(`${BASE_URL}/documents`);
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch documents");
+  }
+
+  return response.json();
 }
 
 export async function uploadDocument(file: File) {
   const formData = new FormData();
   formData.append("file", file);
 
-  return apiFetch<DocumentListResponse>("/documents/upload", {
+  const response = await fetch(`${BASE_URL}/documents/upload`, {
     method: "POST",
     body: formData,
   });
+
+  if (!response.ok) {
+    throw new Error("Upload failed");
+  }
+
+  return response.json();
 }

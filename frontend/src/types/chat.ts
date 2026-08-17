@@ -1,12 +1,14 @@
+export interface Source {
+  filename: string;
+  page: number;
+  score: number;
+}
+
 export interface ChatRequest {
-    question: string;
+  question: string;
 }
 
 export interface ChatResponse {
-    answer: string;
-}
-
-export interface Message {
-    role: 'user' | 'assistant';
-    content: string;
+  answer: string;
+  sources: Source[];
 }

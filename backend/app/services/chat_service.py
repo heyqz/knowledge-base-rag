@@ -3,7 +3,7 @@ from openai import OpenAI
 from app.core.config import settings
 from app.retrieval.retriever import Retriever
 from app.retrieval.prompt_builder import PromptBuilder
-from app.models.chat import ChatResponse
+from app.models.chat import ChatResponse, Source
 
 class ChatService:
     def __init__(self, retriever: Retriever | None = None, prompt_builder: PromptBuilder | None = None):
@@ -17,7 +17,17 @@ class ChatService:
 
         # Build a prompt using the retrieved documents and user input
         prompt = self.prompt_builder.build(question, chunks)
-
+        
+        # add sources into chat response
+        sources = [
+            Source(
+                filename=chunk.filename or "Unknown",
+                page=chunk.page or 1,
+                score=chunk.score,
+            )
+            for chunk in chunks     
+        ]
+            
         # Generate a response using the OpenAI API
         response = self.client.chat.completions.create(
             model=settings.CHAT_MODEL,
@@ -28,5 +38,5 @@ class ChatService:
 
         return ChatResponse(
                 answer=response.choices[0].message.content or "",
-                retrieved_chunks=len(chunks),
+                sources= sources
     )

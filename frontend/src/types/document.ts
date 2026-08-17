@@ -1,10 +1,12 @@
-export interface DocumentResponse {
+export type DocumentStatus = "indexed" | "uploaded";
+
+export interface Document {
   id: string;
   filename: string;
-  status: string;
+  status: DocumentStatus;
   uploaded_at: string;
 }
 
 export interface DocumentListResponse {
-  documents: DocumentResponse[];
+  documents: Document[];
 }

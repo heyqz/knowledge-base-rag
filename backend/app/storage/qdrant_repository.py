@@ -65,11 +65,12 @@ class QdrantRepository(VectorRepository):
         for point in result.points:
             payload = point.payload or {}
             chunk = RetrievedChunk(
-                text=payload.get("text", ""),
+                text=payload["text"],
                 score=point.score,
+                filename=payload.get("filename"),
                 page=payload.get("page"),
-                source=payload.get("source"),
                 document_id=payload.get("document_id"),
+                # chunk_id =str(point.id),
             )
             chunks.append(chunk)
         return chunks
