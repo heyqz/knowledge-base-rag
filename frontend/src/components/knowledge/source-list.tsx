@@ -1,14 +1,20 @@
 import { SourceCard } from "./source-card";
 import type { Source } from "@/types/chat";
 
-type SourceListPorps = {
+type SourceListProps = {
   sources: Source[];
 };
 
-export function SourceList({ sources }: SourceListPorps) {
+export function SourceList({ sources }: SourceListProps) {
+  const uniqueSources = Array.from(
+    new Map(
+      sources.map((source) => [`${source.filename}-${source.page}`, source]),
+    ).values(),
+  );
+
   return (
     <div className="space-y-3">
-      {sources.map((source) => (
+      {uniqueSources.map((source) => (
         <SourceCard key={`${source.filename}-${source.page}`} source={source} />
       ))}
     </div>

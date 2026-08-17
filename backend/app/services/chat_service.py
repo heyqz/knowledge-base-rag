@@ -1,4 +1,5 @@
 from openai import OpenAI
+import json
 
 from app.core.config import settings
 from app.retrieval.retriever import Retriever
@@ -39,4 +40,32 @@ class ChatService:
         return ChatResponse(
                 answer=response.choices[0].message.content or "",
                 sources= sources
-    )
+        )
+        
+    def stream_chat(self, question: str):
+        chunks = self.retriever.retrieve(question)
+        prompt = self.prompt_builder.build(question, chunks)  
+        sources = [
+            {
+                "filename": chunk.filename or "Unknown",
+                "page": chunk.page or 0,
+                "score": chunk.score,
+            }
+            for chunk in chunks     
+        ]  
+        response = self.client.chat.completions.create(
+            model=settings.CHAT_MODEL,
+            messages=[{"role": "user", "content": prompt}],
+            stream=True
+
+        )
+        for chunk in response:
+            delta = chunk.choices[0].delta.content
+            
+            if delta:
+                yield f"data: {json.dumps({'token': delta})}\n\n"
+        
+        yield f"data: {json.dumps({
+            'done': True, 
+            'sources':sources
+            })}\n\n"

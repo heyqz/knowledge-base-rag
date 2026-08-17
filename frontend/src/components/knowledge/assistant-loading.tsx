@@ -1,6 +1,6 @@
 import { Skeleton } from "@/components/ui/skeleton";
 
-export function AnswerLoading() {
+export function AssistantLoading() {
   return (
     <div className="mt-8 space-y-8">
       {/* AI Answer */}

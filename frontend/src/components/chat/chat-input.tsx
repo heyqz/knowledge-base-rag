@@ -5,20 +5,20 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
 import type { ChatRequest, ChatResponse } from "@/types/chat";
+import { streamMessage } from "@/services/chat";
 
 type ChatInputProps = {
-  chat: UseMutationResult<ChatResponse, Error, ChatRequest>;
+  onQuestionSubmit: (quesiont: string) => void;
 };
 
-export function ChatInput({ chat }: ChatInputProps) {
+export function ChatInput({ onQuestionSubmit }: ChatInputProps) {
   const [question, setQuestion] = useState("");
 
-  function handleSend() {
+  async function handleSend() {
     if (!question.trim()) return;
 
-    chat.mutate({
-      question,
-    });
+    onQuestionSubmit(question);
+
     setQuestion("");
   }
 
@@ -29,17 +29,14 @@ export function ChatInput({ chat }: ChatInputProps) {
           className="h-12"
           value={question}
           onChange={(e) => setQuestion(e.target.value)}
-          placeholder={
-            chat.isPending ? "Generating answer..." : "Ask anything..."
-          }
+          placeholder={"Generating answer..."}
         />
 
         <Button
           className="h-12 px-6"
           onClick={handleSend}
-          disabled={chat.isPending}
         >
-          {chat.isPending ? "Think..." : "Send"}
+          Send
         </Button>
       </div>
     </div>
