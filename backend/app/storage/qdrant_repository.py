@@ -1,6 +1,6 @@
 from qdrant_client import QdrantClient
 from qdrant_client.models import Distance, VectorParams, PointStruct
-
+from qdrant_client.models import Filter, FieldCondition, MatchValue
 
 from app.core.config import settings
 from app.storage.vector_repository import VectorRepository
@@ -74,3 +74,16 @@ class QdrantRepository(VectorRepository):
             )
             chunks.append(chunk)
         return chunks
+
+    def delete_by_document_id(self, document_id: str) -> None:
+        self.client.delete(
+            collection_name=self.collection_name,
+            points_selector=Filter(
+                must=[
+                    FieldCondition(
+                        key="document_id",
+                        match=MatchValue(value=document_id),
+                    )
+                ]
+            ),
+        )

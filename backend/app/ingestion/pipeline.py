@@ -36,6 +36,14 @@ class IngestionPipeline:
         # Chunk the document
         chunks = self.chunker.split(loaded_document)
         
+        print("\n===== CHUNKS =====")
+
+        for i, chunk in enumerate(chunks):
+            print(f"\n--- Chunk {i} ---")
+            print(repr(chunk.page_content[:1000]))
+
+        print("==================")
+                
         texts = [chunk.page_content for chunk in chunks]
         
         # Embed the texts

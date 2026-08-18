@@ -44,6 +44,7 @@ class ChatService:
         
     def stream_chat(self, question: str):
         chunks = self.retriever.retrieve(question)
+        
         prompt = self.prompt_builder.build(question, chunks)  
         sources = [
             {

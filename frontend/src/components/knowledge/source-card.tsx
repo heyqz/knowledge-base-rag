@@ -1,5 +1,3 @@
-import { FileText } from "lucide-react";
-
 import { Card, CardContent } from "@/components/ui/card";
 import type { Source } from "@/types/source";
 

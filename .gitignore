@@ -25,6 +25,7 @@ node_modules/
 # Uploads & test data
 uploads/
 test_data/
+storage/ocr/
 
 # Qdrant
 qdrant_storage/
