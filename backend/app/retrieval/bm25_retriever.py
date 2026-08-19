@@ -41,6 +41,7 @@ class BM25Retriever:
                     page=chunk.page,
                     filename=chunk.filename,
                     document_id=chunk.document_id,
+                    chunk_id=chunk.chunk_id
                 )
             )
             if len(results) >= top_k:

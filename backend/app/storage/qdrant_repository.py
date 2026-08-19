@@ -70,7 +70,7 @@ class QdrantRepository(VectorRepository):
                 filename=payload.get("filename"),
                 page=payload.get("page"),
                 document_id=payload.get("document_id"),
-                # chunk_id =str(point.id),
+                chunk_id =str(point.id),
             )
             chunks.append(chunk)
         return chunks
@@ -94,7 +94,8 @@ class QdrantRepository(VectorRepository):
                     score=0.0,
                     filename=payload.get("filename"),
                     page=payload.get("page"),
-                    document_id=payload.get("document_id")
+                    document_id=payload.get("document_id"),
+                    chunk_id=str(point.id)
                 )
                 
                 chunks.append(chunk)

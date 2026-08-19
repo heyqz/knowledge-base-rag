@@ -20,6 +20,8 @@ class HybridRetriever:
         query: str,
         top_k: int = 5,
         candidate_k: int = 10,
+        dense_weight: float = 1.0,
+        bm25_weight: float = 1.0,
     ) -> list[RetrievedChunk]:
 
         dense_results = self.dense_retriever.retrieve(
@@ -36,6 +38,8 @@ class HybridRetriever:
             dense_results,
             bm25_results,
             top_k=top_k,
+            dense_weight=dense_weight,
+            bm25_weight=bm25_weight,
         )
 
     def _rrf(
@@ -44,39 +48,43 @@ class HybridRetriever:
         bm25_results: list[RetrievedChunk],
         top_k: int,
         k: int = 60,
+        dense_weight: float = 1.0,
+        bm25_weight: float = 1.0,
     ) -> list[RetrievedChunk]:
 
         scores = defaultdict(float)
         chunks = {}
 
-        print("\n===== DENSE RESULTS =====")
+        # print("\n===== DENSE RESULTS =====")
 
         for rank, chunk in enumerate(dense_results, start=1):
             key = self._chunk_key(chunk)
 
-            scores[key] += 1 / (k + rank)
+            scores[key] += dense_weight / (k + rank)
             chunks[key] = chunk
             
-            print(
-                rank,
-                chunk.filename,
-                chunk.page,
-                chunk.score,
-            )
+            # print(
+            #     rank,
+            #     chunk.chunk_id,
+            #     chunk.filename,
+            #     chunk.page,
+            #     chunk.score,
+            # )
 
-        print("\n===== BM25 RESULTS =====")
+        # print("\n===== BM25 RESULTS =====")
         for rank, chunk in enumerate(bm25_results, start=1):
             key = self._chunk_key(chunk)
 
-            scores[key] += 1 / (k + rank)
+            scores[key] += bm25_weight / (k + rank)
             chunks[key] = chunk
             
-            print(
-                rank,
-                chunk.filename,
-                chunk.page,
-                chunk.score,
-            )
+            # print(
+            #     rank,
+            #     chunk.chunk_id,
+            #     chunk.filename,
+            #     chunk.page,
+            #     chunk.score,
+            # )
 
         ranked_keys = sorted(
             scores,
@@ -96,15 +104,27 @@ class HybridRetriever:
                     filename=chunk.filename,
                     page=chunk.page,
                     document_id=chunk.document_id,
+                    chunk_id=chunk.chunk_id,
                 )
             )
+        # print("\n===== RRF RESULTS =====")
+
+        # for rank, key in enumerate(ranked_keys[:10], start=1):
+        #     chunk = chunks[key]
+
+        #     print(
+        #         rank,
+        #         chunk.chunk_id,
+        #         chunk.filename,
+        #         chunk.page,
+        #         scores[key],
+        #     )
 
         return results
 
     @staticmethod
     def _chunk_key(chunk: RetrievedChunk) -> str:
-        return (
-            f"{chunk.document_id}:"
-            f"{chunk.page}:"
-            f"{chunk.text}"
-        )
+        if chunk.chunk_id is None:
+            raise ValueError("Retrieved chunk is missing chunk_id.")
+
+        return chunk.chunk_id

@@ -38,7 +38,7 @@ class DocumentService:
         try:
 
             self.pipeline.ingest(document)
-            self.retrival_manager.refresh()
+            self.retrieval_manager.refresh()
             
             document.status = DocumentStatus.INDEXED
 

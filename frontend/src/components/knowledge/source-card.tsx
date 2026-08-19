@@ -7,15 +7,15 @@ type SourceCardProps = {
 
 export function SourceCard({ source }: SourceCardProps) {
   return (
-    <Card className="cursor-pointer transition-colors hover:bg-muted">
-      <CardContent className="flex items-center gap-3 p-4">
+    <Card className="transition-colors hover:bg-muted">
+      <CardContent className="flex items-center gap-2 px-3 py-2">
         📄
-        <div className="flex flex-col">
-          <span className="text-sm font-medium">{source.filename}</span>
-          <span className="text-xs text-muted-foreground">
-            Page {source.page}
-          </span>
-        </div>
+        <span className="min-w-0 flex-1 truncate text-xs font-medium">
+          {source.filename}
+        </span>
+        <span className="shrink-0 text-xs text-muted-foreground">
+          Page {source.page + 1}
+        </span>
       </CardContent>
     </Card>
   );

@@ -1,0 +1,846 @@
+[
+  {
+    "id": "q001",
+    "question": "What time is lunch?",
+    "category": "exact_lookup",
+    "relevant_sources": [
+      {
+        "filename": "Pelican Class Schedule.pdf",
+        "page": 0,
+        "text_contains": [
+          "12:00PM",
+          "LUNCH"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "q002",
+    "question": "What time does rest start?",
+    "category": "exact_lookup",
+    "relevant_sources": [
+      {
+        "filename": "Pelican Class Schedule.pdf",
+        "page": 0,
+        "text_contains": [
+          "1:00PM",
+          "REST"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "q003",
+    "question": "When is outdoor play on the big playground?",
+    "category": "exact_lookup",
+    "relevant_sources": [
+      {
+        "filename": "Pelican Class Schedule.pdf",
+        "page": 0,
+        "text_contains": [
+          "9:45AM",
+          "OUTDOOR PLAY",
+          "BIG PLAYGROUND"
+        ]
+      },
+      {
+        "filename": "Pelican Class Schedule.pdf",
+        "page": 0,
+        "text_contains": [
+          "4:45PM",
+          "OUTDOOR PLAY",
+          "BIG PLAYGROUND"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "q004",
+    "question": "What time is the afternoon snack?",
+    "category": "exact_lookup",
+    "relevant_sources": [
+      {
+        "filename": "Pelican Class Schedule.pdf",
+        "page": 0,
+        "text_contains": [
+          "3:20PM",
+          "AFTERNOON SNACK"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "q005",
+    "question": "How often is potty training encouraged?",
+    "category": "lexical",
+    "relevant_sources": [
+      {
+        "filename": "Pelican Class Schedule.pdf",
+        "page": 0,
+        "text_contains": [
+          "Potty training is encouraged each hour",
+          "more often if needed"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "q006",
+    "question": "What are some signs that a child is ready for potty training?",
+    "category": "semantic",
+    "relevant_sources": [
+      {
+        "filename": "Potty Training Packet.pdf",
+        "page": 1,
+        "text_contains": [
+          "Your child is ready to learn to use the toilet",
+          "Stays dry for at least 2 hours"
+        ]
+      }
+    ]
+  },
+  {
+   "id": "q007",
+    "question": "What should parents avoid doing when potty training?",
+    "category": "semantic",
+    "relevant_sources": [
+        {
+        "filename": "Potty Training Packet.pdf",
+        "page": 2,
+        "text_contains": [
+            "Avoid punishment"
+        ]
+        },
+        {
+        "filename": "Potty Training Packet.pdf",
+        "page": 3,
+        "text_contains": [
+            "force your child"
+        ]
+        }
+    ]
+  },
+  {
+    "id": "q008",
+    "question": "What is the parent's responsibility during potty training?",
+    "category": "semantic",
+    "relevant_sources": [
+      {
+        "filename": "Potty Training Packet.pdf",
+        "page": 2,
+        "text_contains": [
+          "parent’s responsibility",
+          "supportive learning environment"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "q009",
+    "question": "What is the child's responsibility during potty training?",
+    "category": "semantic",
+    "relevant_sources": [
+      {
+        "filename": "Potty Training Packet.pdf",
+        "page": 2,
+        "text_contains": [
+          "your child’s responsibility",
+          "Learn his body’s signals"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "q010",
+    "question": "What should parents do if potty training is becoming a power struggle?",
+    "category": "paraphrase",
+    "relevant_sources": [
+      {
+        "filename": "Potty Training Packet.pdf",
+        "page": 3,
+        "text_contains": [
+          "take the pressure off",
+          "Stop talking about potty training"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "q011",
+    "question": "What are some situations when it may not be a good time to start potty training?",
+    "category": "semantic",
+    "relevant_sources": [
+      {
+        "filename": "Potty Training Packet.pdf",
+        "page": 1,
+        "text_contains": [
+          "When Not to Start Potty Training",
+          "family move",
+          "changing existing child care arrangements"
+        ]
+      }
+    ]
+  },
+{
+  "id": "q012",
+  "question": "What learning domains are included in the Bridge program?",
+  "category": "list",
+  "relevant_sources": [
+    {
+      "filename": "Pelican Class Schedule.pdf",
+      "page": 0,
+      "text_contains": [
+        "LEARNING ENCOMPASSES",
+        "Approaches to Learning",
+        "Mathematics",
+        "Social Studies"
+      ]
+    }
+  ]
+},
+  {
+    "id": "q013",
+    "question": "What are some of the Bridge end-of-program learning goals?",
+    "category": "semantic",
+    "relevant_sources": [
+      {
+        "filename": "Bridge Learning Goals Letter.pdf",
+        "page": 0,
+        "text_contains": [
+          "Bridge: End of Program Learning Goals",
+          "Displays social motivation",
+          "Rote counting 1- 20"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "q014",
+    "question": "How does the Goddard School track children's developmental progress?",
+    "category": "semantic",
+    "relevant_sources": [
+      {
+        "filename": "Bridge Learning Goals Letter.pdf",
+        "page": 0,
+        "text_contains": [
+          "CORAdvantage",
+          "observational data",
+          "eight key learning domains"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "q015",
+    "question": "Does the parent survey ask whether a child naps at home?",
+    "category": "exact_lookup",
+    "relevant_sources": [
+      {
+        "filename": "parent survey.pdf",
+        "page": 0,
+        "text_contains": [
+          "Does your child nap at home?"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "q016",
+    "question": "What language does the parent survey ask a child to use at home?",
+    "category": "exact_lookup",
+    "relevant_sources": [
+      {
+        "filename": "parent survey.pdf",
+        "page": 1,
+        "text_contains": [
+          "What language does your child use when speaking at home?"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "q017",
+    "question": "When is the morning snack?",
+    "category": "exact_lookup",
+    "relevant_sources": [
+      {
+        "filename": "Pelican Class Schedule.pdf",
+        "page": 0,
+        "text_contains": [
+          "9:30AM",
+          "MORNING SNACK"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "q018",
+    "question": "When is outdoor play on the side playground?",
+    "category": "exact_lookup",
+    "relevant_sources": [
+      {
+        "filename": "Pelican Class Schedule.pdf",
+        "page": 0,
+        "text_contains": [
+          "3:45PM",
+          "OUTDOOR PLAY",
+          "SIDE PLAYGROUND"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "q019",
+    "question": "What time does the end-of-day routine begin?",
+    "category": "exact_lookup",
+    "relevant_sources": [
+      {
+        "filename": "Pelican Class Schedule.pdf",
+        "page": 0,
+        "text_contains": [
+          "5:30PM",
+          "END-OF-DAY ROUTINES"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "q020",
+    "question": "What happens at 3:00PM?",
+    "category": "exact_lookup",
+    "relevant_sources": [
+      {
+        "filename": "Pelican Class Schedule.pdf",
+        "page": 0,
+        "text_contains": [
+          "3:00PM",
+          "TRANSITION",
+          "MUSIC & MOVEMENT",
+          "WAKE UP ROUTINE",
+          "BATHROOM ROUTINE"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "q021",
+    "question": "What activities are included in STEAM enrichment?",
+    "category": "semantic",
+    "relevant_sources": [
+      {
+        "filename": "Pelican Class Schedule.pdf",
+        "page": 0,
+        "text_contains": [
+          "STEAM ENRICHMENT",
+          "Yoga, music, movement, art, outdoor play"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "q022",
+    "question": "What happens during Learning Centers?",
+    "category": "semantic",
+    "relevant_sources": [
+      {
+        "filename": "Pelican Class Schedule.pdf",
+        "page": 0,
+        "text_contains": [
+          "LEARNING CENTERS",
+          "Independent & collaborative exploration"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "q023",
+    "question": "What happens during Small Group?",
+    "category": "semantic",
+    "relevant_sources": [
+      {
+        "filename": "Pelican Class Schedule.pdf",
+        "page": 0,
+        "text_contains": [
+          "SMALL GROUP",
+          "Deepening knowledge"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "q024",
+    "question": "What time does the morning meeting start?",
+    "category": "exact_lookup",
+    "relevant_sources": [
+      {
+        "filename": "Pelican Class Schedule.pdf",
+        "page": 0,
+        "text_contains": [
+          "10:45AM",
+          "MORNING MEETING"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "q025",
+    "question": "What time does story time start?",
+    "category": "exact_lookup",
+    "relevant_sources": [
+      {
+        "filename": "Pelican Class Schedule.pdf",
+        "page": 0,
+        "text_contains": [
+          "11:45AM",
+          "STORY TIME"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "q026",
+    "question": "What happens at 4:45PM?",
+    "category": "exact_lookup",
+    "relevant_sources": [
+      {
+        "filename": "Pelican Class Schedule.pdf",
+        "page": 0,
+        "text_contains": [
+          "4:45PM",
+          "OUTDOOR PLAY",
+          "BIG PLAYGROUND",
+          "SPRING & SUMMER ONLY"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "q027",
+    "question": "Does a child need to be a certain age before starting potty training?",
+    "category": "semantic",
+    "relevant_sources": [
+      {
+        "filename": "Potty Training Packet.pdf",
+        "page": 0,
+        "text_contains": [
+          "There is not one “right” age"
+        ]
+      },
+      {
+        "filename": "Potty Training Packet.pdf",
+        "page": 1,
+        "text_contains": [
+          "18 months",
+          "3"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "q028",
+    "question": "What percentage of children are out of diapers by age 2½?",
+    "category": "numeric",
+    "relevant_sources": [
+      {
+        "filename": "Potty Training Packet.pdf",
+        "page": 1,
+        "text_contains": [
+          "22% of children are out of diapers by 2½"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "q029",
+    "question": "What percentage of children are out of diapers by age 3½?",
+    "category": "numeric",
+    "relevant_sources": [
+      {
+        "filename": "Potty Training Packet.pdf",
+        "page": 1,
+        "text_contains": [
+          "88% of children are out of diapers by 3½"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "q030",
+    "question": "What physical skills are important for potty training readiness?",
+    "category": "semantic",
+    "relevant_sources": [
+      {
+        "filename": "Potty Training Packet.pdf",
+        "page": 1,
+        "text_contains": [
+          "ability to walk",
+          "pull pants up and down",
+          "get onto/off the potty"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "q031",
+    "question": "Why is recognizing when a child is having a bowel movement important for potty training?",
+    "category": "causal",
+    "relevant_sources": [
+      {
+        "filename": "Potty Training Packet.pdf",
+        "page": 1,
+        "text_contains": [
+          "Recognizes that she is urinating or having a bowel movement",
+          "she won’t be successful at potty training"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "q032",
+    "question": "What situations might make it a bad time to start potty training?",
+    "category": "semantic",
+    "relevant_sources": [
+      {
+        "filename": "Potty Training Packet.pdf",
+        "page": 1,
+        "text_contains": [
+          "When Not to Start Potty Training",
+          "family move",
+          "new baby",
+          "major illness"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "q033",
+    "question": "What should parents do when a child has more potty accidents during a stressful time?",
+    "category": "semantic",
+    "relevant_sources": [
+      {
+        "filename": "Potty Training Packet.pdf",
+        "page": 2,
+        "text_contains": [
+          "this is normal",
+          "patience and support"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "q034",
+    "question": "What should parents do to create a supportive learning environment for potty training?",
+    "category": "semantic",
+    "relevant_sources": [
+      {
+        "filename": "Potty Training Packet.pdf",
+        "page": 2,
+        "text_contains": [
+          "parent’s responsibility",
+          "supportive learning environment",
+          "Offer your child the tools"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "q035",
+    "question": "Why can forcing a child to use the potty be problematic?",
+    "category": "causal",
+    "relevant_sources": [
+      {
+        "filename": "Potty Training Packet.pdf",
+        "page": 3,
+        "text_contains": [
+          "not to force your child to use the potty",
+          "intense power struggles",
+          "constipation"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "q036",
+    "question": "What are some concerns about using rewards for potty training?",
+    "category": "semantic",
+    "relevant_sources": [
+      {
+        "filename": "Potty Training Packet.pdf",
+        "page": 4,
+        "text_contains": [
+          "rewards",
+          "anxiety or feelings of failure",
+          "expect rewards"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "q037",
+    "question": "How many learning domains are used to track developmental progress?",
+    "category": "numeric",
+    "relevant_sources": [
+      {
+        "filename": "Bridge Learning Goals Letter.pdf",
+        "page": 0,
+        "text_contains": [
+          "eight key learning domains"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "q038",
+    "question": "What assessment tool does the Goddard School use to collect observational data?",
+    "category": "exact_lookup",
+    "relevant_sources": [
+      {
+        "filename": "Bridge Learning Goals Letter.pdf",
+        "page": 0,
+        "text_contains": [
+          "CORAdvantage",
+          "assessment tool"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "q039",
+    "question": "What are some Bridge goals related to mathematics?",
+    "category": "semantic",
+    "relevant_sources": [
+      {
+        "filename": "Bridge Learning Goals Letter.pdf",
+        "page": 0,
+        "text_contains": [
+          "Rote counting 1- 20",
+          "more” or “less",
+          "Identifies and describes shapes",
+          "Creates patterns"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "q040",
+    "question": "What are some Bridge goals related to language and literacy?",
+    "category": "semantic",
+    "relevant_sources": [
+      {
+        "filename": "Bridge Learning Goals Letter.pdf",
+        "page": 0,
+        "text_contains": [
+          "Identifies their name",
+          "Identifies letters in their name",
+          "Tells a story",
+          "Uses complex and descriptive language"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "q041",
+    "question": "What social skills are included among the Bridge end-of-program goals?",
+    "category": "semantic",
+    "relevant_sources": [
+      {
+        "filename": "Bridge Learning Goals Letter.pdf",
+        "page": 0,
+        "text_contains": [
+          "social motivation",
+          "cooperative play",
+          "independent play choices",
+          "multi-step directions"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "q042",
+    "question": "What are some goals related to exploring the natural world?",
+    "category": "semantic",
+    "relevant_sources": [
+      {
+        "filename": "Bridge Learning Goals Letter.pdf",
+        "page": 0,
+        "text_contains": [
+          "meaningful exploration of the natural world",
+          "Asks questions to discover answers",
+          "investigations"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "q043",
+    "question": "What does the Bridge program say about children's gross-motor development?",
+    "category": "exact_lookup",
+    "relevant_sources": [
+      {
+        "filename": "Bridge Learning Goals Letter.pdf",
+        "page": 0,
+        "text_contains": [
+          "Demonstrates gross-motor coordination and speed"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "q044",
+    "question": "What does the parent survey ask about a child's nap schedule?",
+    "category": "exact_lookup",
+    "relevant_sources": [
+      {
+        "filename": "parent survey.pdf",
+        "page": 1,
+        "text_contains": [
+          "If so from when to when do they nap?",
+          "12pm-2pm"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "q045",
+    "question": "What sleep arrangements does the parent survey ask parents to choose from?",
+    "category": "list",
+    "relevant_sources": [
+      {
+        "filename": "parent survey.pdf",
+        "page": 1,
+        "text_contains": [
+          "Crib",
+          "Toddler Bed",
+          "Co-sleep",
+          "Other"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "q046",
+    "question": "What does the parent survey ask about a child's hobbies or special interests?",
+    "category": "exact_lookup",
+    "relevant_sources": [
+      {
+        "filename": "parent survey.pdf",
+        "page": 1,
+        "text_contains": [
+          "What hobbies or special interests does your child enjoy?"
+        ]
+      }
+    ]
+  },
+ {
+  "id": "q047",
+  "question": "What does the parent survey ask about the child's language at home?",
+  "category": "exact_lookup",
+  "relevant_sources": [
+    {
+      "filename": "parent survey.pdf",
+      "page": 1,
+      "text_contains": [
+        "What language does your child use when speaking at home?"
+      ]
+    }
+  ]
+},
+{
+  "id": "q048",
+  "question": "What does the parent survey ask about a child's hobbies or special interests?",
+  "category": "exact_lookup",
+  "relevant_sources": [
+    {
+      "filename": "parent survey.pdf",
+      "page": 1,
+      "text_contains": [
+        "What hobbies or special interests does your child enjoy?"
+      ]
+    }
+  ]
+},
+  
+  {
+    "id": "q049",
+    "question": "What does the school schedule say about how often potty training is encouraged?",
+    "category": "lexical",
+    "relevant_sources": [
+      {
+        "filename": "Pelican Class Schedule.pdf",
+        "page": 0,
+        "text_contains": [
+          "Potty training is encouraged each hour",
+          "more often if needed"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "q050",
+    "question": "A child is showing interest in using the potty but the family recently moved. What does the potty training packet suggest?",
+    "category": "reasoning",
+    "relevant_sources": [
+      {
+        "filename": "Potty Training Packet.pdf",
+        "page": 1,
+        "text_contains": [
+          "upcoming or recent family move",
+          "generally not good times to start training"
+        ]
+      },
+      {
+        "filename": "Potty Training Packet.pdf",
+        "page": 1,
+        "text_contains": [
+          "Most important, your child wants to use the potty"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "q051",
+    "question": "How does the Bridge program measure children's development, and what kinds of skills are included in its end-of-program goals?",
+    "category": "multi_chunk",
+    "relevant_sources": [
+      {
+        "filename": "Bridge Learning Goals Letter.pdf",
+        "page": 0,
+        "text_contains": [
+          "CORAdvantage",
+          "eight key learning domains"
+        ]
+      },
+      {
+        "filename": "Bridge Learning Goals Letter.pdf",
+        "page": 0,
+        "text_contains": [
+          "Bridge: End of Program Learning Goals"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "q052",
+    "question": "What information does the parent survey ask parents to provide about a child's daily life and home environment?",
+    "category": "multi_chunk",
+    "relevant_sources": [
+      {
+        "filename": "parent survey.pdf",
+        "page": 0,
+        "text_contains": [
+          "Does your child nap at home?",
+          "potty training"
+        ]
+      },
+      {
+        "filename": "parent survey.pdf",
+        "page": 1,
+        "text_contains": [
+          "What hobbies or special interests",
+          "What language do family members use",
+          "What holidays"
+        ]
+      }
+    ]
+  }
+]
