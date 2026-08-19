@@ -1,8 +1,8 @@
-from app.retrieval.retriever import Retriever
+from app.retrieval.dense_retriever import DenseRetriever
 
 
 def test_retriever():
-    retriever = Retriever()
+    retriever = DenseRetriever()
 
     results = retriever.retrieve(
         "What is this PDF about?"

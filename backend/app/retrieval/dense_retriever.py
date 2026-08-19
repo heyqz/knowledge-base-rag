@@ -4,7 +4,7 @@ from app.storage.qdrant_repository import QdrantRepository
 from app.core.config import settings
 from app.models.retrieved_chunk import RetrievedChunk
 
-class Retriever:
+class DenseRetriever:
 
     def __init__(self, embedder: OpenAIEmbedder | None =None, repository: VectorRepository | None =None):
         self.embedder = embedder or OpenAIEmbedder(settings.EMBEDDING_MODEL)

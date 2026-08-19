@@ -2,14 +2,14 @@ from openai import OpenAI
 import json
 
 from app.core.config import settings
-from app.retrieval.retriever import Retriever
+from app.retrieval.dense_retriever import DenseRetriever
 from app.retrieval.prompt_builder import PromptBuilder
 from app.models.chat import ChatResponse, Source
 
 class ChatService:
-    def __init__(self, retriever: Retriever | None = None, prompt_builder: PromptBuilder | None = None):
+    def __init__(self, retriever: DenseRetriever | None = None, prompt_builder: PromptBuilder | None = None):
         self.client = OpenAI(api_key=settings.OPENAI_API_KEY)
-        self.retriever = retriever or Retriever()
+        self.retriever = retriever or DenseRetriever()
         self.prompt_builder = prompt_builder or PromptBuilder()
 
     def chat(self, question: str) -> ChatResponse:
