@@ -1,11 +1,7 @@
 import { useState } from "react";
-import type { UseMutationResult } from "@tanstack/react-query";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-
-import type { ChatRequest, ChatResponse } from "@/types/chat";
-import { streamMessage } from "@/services/chat";
 
 type ChatInputProps = {
   onQuestionSubmit: (quesiont: string) => void;
@@ -30,12 +26,15 @@ export function ChatInput({ onQuestionSubmit }: ChatInputProps) {
           value={question}
           onChange={(e) => setQuestion(e.target.value)}
           placeholder={"Generating answer..."}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              e.preventDefault();
+              handleSend();
+            }
+          }}
         />
 
-        <Button
-          className="h-12 px-6"
-          onClick={handleSend}
-        >
+        <Button className="h-12 px-6" onClick={handleSend}>
           Send
         </Button>
       </div>
