@@ -1,15 +1,17 @@
 from app.storage.qdrant_repository import QdrantRepository
 from app.retrieval.bm25_retriever import BM25Retriever
+from app.retrieval.bm25_index import BM25Index
 
 repository = QdrantRepository()
 
 chunks = repository.get_all_chunks()
 
 print("Total chunks:", len(chunks))
+index = BM25Index()
+index.build(chunks)
+bm25_retriever = BM25Retriever(index)
 
-retriever = BM25Retriever(chunks)
-
-results = retriever.retrieve(
+results = bm25_retriever.retrieve(
     "What time is lunch?",
     top_k=5,
 )

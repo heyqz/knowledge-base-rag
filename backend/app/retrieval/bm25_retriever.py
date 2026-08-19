@@ -1,27 +1,23 @@
 from rank_bm25 import BM25Okapi
 
 from app.models.retrieved_chunk import RetrievedChunk
+from app.retrieval.bm25_index import BM25Index
 
 class BM25Retriever:
-    def __init__(self, chunks: list[RetrievedChunk]):
-        self.chunks = chunks
-
-        tokenized_chunks = [
-            self._tokenize(chunk.text)
-            for chunk in chunks
-        ]
-
-        self.bm25 = BM25Okapi(tokenized_chunks)
+    def __init__(self, index: BM25Index):
+        self.index = index
 
     def retrieve(
         self,
         query: str,
         top_k: int = 5,
     ) -> list[RetrievedChunk]:
+        if not self.index.is_ready():
+            return []
 
         tokenized_query = self._tokenize(query)
 
-        scores = self.bm25.get_scores(tokenized_query)
+        scores = self.index.bm25.get_scores(tokenized_query)
 
         ranked_indices = sorted(
             range(len(scores)),
@@ -32,14 +28,16 @@ class BM25Retriever:
         results = []
 
         for index in ranked_indices[:top_k]:
-            if scores[index] <=0:
+            score = scores[index]
+            if score <=0:
                 continue
-            chunk = self.chunks[index]
+            
+            chunk = self.index.chunks[index]
 
             results.append(
                 RetrievedChunk(
                     text=chunk.text,
-                    score=float(scores[index]),
+                    score=float(score),
                     page=chunk.page,
                     filename=chunk.filename,
                     document_id=chunk.document_id,

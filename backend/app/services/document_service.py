@@ -6,13 +6,17 @@ from fastapi import UploadFile
 
 from app.models.document import Document, DocumentStatus
 from app.storage.document_repository import document_repository
+from app.storage.qdrant_repository import QdrantRepository
 from app.storage.file_storage import file_storage
 from app.ingestion.pipeline import IngestionPipeline
+from app.retrieval.retrieval_manager import retrieval_manager
 
 
 class DocumentService:
     def __init__(self):
         self.pipeline = IngestionPipeline()
+        self.retrieval_manager = retrieval_manager
+        self.repository = QdrantRepository()
         
     def upload_document(self, file: UploadFile) -> Document:
         # Save the file to the storage
@@ -34,6 +38,7 @@ class DocumentService:
         try:
 
             self.pipeline.ingest(document)
+            self.retrival_manager.refresh()
             
             document.status = DocumentStatus.INDEXED
 
@@ -55,13 +60,22 @@ class DocumentService:
 
     def delete_document(self, document_id: str):
         document = document_repository.get_by_id(document_id)
-        if document:
-            # Delete the file from storage
-            file_storage.delete(document.file_path)
-            # Optionally, you can also delete the record from the database
-            document_repository.delete(document_id)
-            return True
-        return False
+        if not document:
+            return False
+        
+        # Delete chunks from Qdrant
+        self.repository.delete_by_document_id(document_id)
+
+        # Delete file from storage
+        file_storage.delete(document.file_path)
+
+        # Delete document metadata from SQLite
+        document_repository.delete(document_id)
+
+        # Refresh BM25 index
+        self.retrieval_manager.refresh()
+
+        return True
 
 
 document_service = DocumentService()
