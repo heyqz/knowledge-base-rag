@@ -74,7 +74,36 @@ class QdrantRepository(VectorRepository):
             )
             chunks.append(chunk)
         return chunks
-
+    
+    def get_all_chunks(self) -> list[RetrievedChunk]:
+        chunks = []
+        offset = None
+        while True:
+            points, offset = self.client.scroll(
+                collection_name=self.collection_name,
+                limit=100,
+                offset=offset,
+                with_payload=True,
+                with_vectors=False,
+            )
+                
+            for point in points:
+                payload = point.payload or {}
+                chunk = RetrievedChunk(
+                    text=payload["text"],
+                    score=0.0,
+                    filename=payload.get("filename"),
+                    page=payload.get("page"),
+                    document_id=payload.get("document_id")
+                )
+                
+                chunks.append(chunk)
+                
+            if offset is None:
+                break
+        
+        return chunks
+    
     def delete_by_document_id(self, document_id: str) -> None:
         self.client.delete(
             collection_name=self.collection_name,

@@ -3,15 +3,32 @@ import json
 
 from app.core.config import settings
 from app.retrieval.dense_retriever import DenseRetriever
+from app.retrieval.bm25_retriever import BM25Retriever
+from app.retrieval.hybrid_retriever import HybridRetriever
+from app.storage.qdrant_repository import QdrantRepository
 from app.retrieval.prompt_builder import PromptBuilder
 from app.models.chat import ChatResponse, Source
 
 class ChatService:
-    def __init__(self, retriever: DenseRetriever | None = None, prompt_builder: PromptBuilder | None = None):
+    def __init__(self, retriever: HybridRetriever | None = None, prompt_builder: PromptBuilder | None = None):
+        
         self.client = OpenAI(api_key=settings.OPENAI_API_KEY)
-        self.retriever = retriever or DenseRetriever()
+        self.retriever = retriever or self._create_hybrid_retriever()
         self.prompt_builder = prompt_builder or PromptBuilder()
-
+        
+    def _create_hybrid_retriever(self) -> HybridRetriever:
+        repository = QdrantRepository()
+       
+        dense_retriever = DenseRetriever(repository=repository)
+        chunks = repository.get_all_chunks()
+        bm25_retriever = BM25Retriever(chunks=chunks)
+        
+        return HybridRetriever(
+            dense_retriever=dense_retriever,
+            bm25_retriever=bm25_retriever
+        )
+        
+        
     def chat(self, question: str) -> ChatResponse:
         # Retrieve relevant documents based on user input
         chunks = self.retriever.retrieve(question)
