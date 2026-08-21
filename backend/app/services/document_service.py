@@ -1,5 +1,4 @@
 from datetime import datetime
-from pathlib import Path
 from uuid import uuid4
 
 from fastapi import UploadFile
@@ -34,23 +33,44 @@ class DocumentService:
         )
         
         document_repository.create(document)
-
+        return document
+    
+    def process_document(self, document_id: str)->None:
+        document = document_repository.get_by_id(document_id)
+        if not document:
+            print(
+                f"Document not found: {document_id}",
+                flush=True,
+            )
+            return
+        
         try:
-
+            print(
+                f"Processing document: {document_id}",
+                flush=True,
+            )
+            document_repository.update_status(document_id, DocumentStatus.PROCESSING)
             self.pipeline.ingest(document)
             self.retrieval_manager.refresh()
+            document_repository.update_status(document_id, DocumentStatus.INDEXED)
             
-            document.status = DocumentStatus.INDEXED
-
-            document_repository.update_status(
-                document.id,
-                DocumentStatus.INDEXED,
+            print(
+                f"Document indexed: {document_id}",
+                flush=True,
             )
 
+            
         except Exception as e:
-            print(e)
-        
-        return document
+            print(
+                f"Failed to process document {document_id}: {e}",
+                flush=True,
+            )
+            
+            document_repository.update_status(
+            document_id,
+            DocumentStatus.FAILED,
+        )
+
 
     def list_documents(self):
         return document_repository.list_all()

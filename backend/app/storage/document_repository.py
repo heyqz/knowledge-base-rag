@@ -26,7 +26,15 @@ class DocumentRepository:
     def create(self, document: Document) -> Document:
         db.execute(
             """
-            INSERT INTO documents (id, filename, original_filename, file_path, file_size, status, uploaded_at)
+            INSERT INTO documents (
+                id,
+                filename,
+                original_filename,
+                file_path,
+                file_size,
+                status,
+                uploaded_at
+            )
             VALUES (?, ?, ?, ?, ?, ?, ?)
             """,
             (
@@ -39,12 +47,21 @@ class DocumentRepository:
                 datetime.now().isoformat(),
             ),
         )
+
         return document
 
-    def get_by_id(self, document_id: str) -> Document | None:
-        row = db.execute(
-            "SELECT * FROM documents WHERE id = ?", (document_id,)
-        ).fetchone()
+    def get_by_id(
+        self,
+        document_id: str,
+    ) -> Document | None:
+
+        rows = db.execute(
+            "SELECT * FROM documents WHERE id = ?",
+            (document_id,),
+        )
+
+        row = rows[0] if rows else None
+
         if row:
             return Document(
                 id=row["id"],
@@ -53,14 +70,17 @@ class DocumentRepository:
                 file_path=row["file_path"],
                 file_size=row["file_size"],
                 status=row["status"],
-                uploaded_at=datetime.fromisoformat(row["uploaded_at"]),
+                uploaded_at=datetime.fromisoformat(
+                    row["uploaded_at"]
+                ),
             )
+
         return None
 
     def list_all(self) -> list[Document]:
         rows = db.execute(
             "SELECT * FROM documents ORDER BY uploaded_at DESC"
-        ).fetchall()
+        )
 
         documents = []
 
@@ -73,13 +93,19 @@ class DocumentRepository:
                     file_path=row["file_path"],
                     file_size=row["file_size"],
                     status=row["status"],
-                    uploaded_at=datetime.fromisoformat(row["uploaded_at"]),
+                    uploaded_at=datetime.fromisoformat(
+                        row["uploaded_at"]
+                    ),
                 )
             )
 
         return documents
-    
-    def update_status(self, document_id: str, status: str):
+
+    def update_status(
+        self,
+        document_id: str,
+        status: str,
+    ):
         db.execute(
             "UPDATE documents SET status = ? WHERE id = ?",
             (status, document_id),

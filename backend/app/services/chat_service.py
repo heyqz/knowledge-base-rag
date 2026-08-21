@@ -4,6 +4,7 @@ import json
 from app.core.config import settings
 from app.retrieval.retrieval_manager import retrieval_manager
 from app.retrieval.prompt_builder import PromptBuilder
+from app.retrieval.hybrid_retriever import HybridRetriever
 from app.models.chat import ChatResponse, Source
 
 
@@ -11,6 +12,7 @@ class ChatService:
 
     def __init__(
         self,
+        retriever: HybridRetriever | None = None,
         prompt_builder: PromptBuilder | None = None,
     ):
         self.client = OpenAI(
@@ -18,93 +20,111 @@ class ChatService:
         )
 
         self.retrieval_manager = retrieval_manager
-        self.retrieval_manager.refresh()
+        self.retriever = (
+            retriever
+            or self.retrieval_manager.get_retriever()
+        )
+        # self.retrieval_manager.refresh()
 
         self.prompt_builder = (
             prompt_builder or PromptBuilder()
         )
 
     def chat(self, question: str) -> ChatResponse:
-        chunks = self.retrieval_manager.retrieve(
-            question,
-            top_k=5,
-            candidate_k=20,
-        )
-
-        prompt = self.prompt_builder.build(
-            question,
-            chunks,
-        )
-
-        sources = [
-            Source(
-                filename=chunk.filename or "Unknown",
-                page=chunk.page or 1,
-                score=chunk.score,
+        try:
+            chunks = self.retrieval_manager.retrieve(
+                question,
+                top_k=5,
+                candidate_k=20,
             )
-            for chunk in chunks
-        ]
 
-        response = self.client.chat.completions.create(
-            model=settings.CHAT_MODEL,
-            messages=[
-                {
-                    "role": "user",
-                    "content": prompt,
-                }
-            ],
-        )
+            prompt = self.prompt_builder.build(
+                question,
+                chunks,
+            )
 
-        return ChatResponse(
-            answer=response.choices[0].message.content or "",
-            sources=sources,
-        )
+            sources = [
+                Source(
+                    filename=chunk.filename or "Unknown",
+                    page=chunk.page or 1,
+                    score=chunk.score,
+                )
+                for chunk in chunks
+            ]
+
+            response = self.client.chat.completions.create(
+                model=settings.CHAT_MODEL,
+                messages=[
+                    {
+                        "role": "user",
+                        "content": prompt,
+                    }
+                ],
+            )
+
+            return ChatResponse(
+                answer=response.choices[0].message.content or "",
+                sources=sources,
+            )
+            
+        except Exception as e:
+            print(f"Chat failed: {e}", flush=True)
+            raise
 
     def stream_chat(self, question: str):
-        chunks = self.retrieval_manager.retrieve(
-            question,
-            top_k=5,
-            candidate_k=20,
-        )
+        try:
+            
+            chunks = self.retrieval_manager.retrieve(
+                question,
+                top_k=5,
+                candidate_k=20,
+            )
 
-        prompt = self.prompt_builder.build(
-            question,
-            chunks,
-        )
+            prompt = self.prompt_builder.build(
+                question,
+                chunks,
+            )
 
-        sources = [
-            {
-                "filename": chunk.filename or "Unknown",
-                "page": chunk.page or 0,
-                "score": chunk.score,
-            }
-            for chunk in chunks
-        ]
-
-        response = self.client.chat.completions.create(
-            model=settings.CHAT_MODEL,
-            messages=[
+            sources = [
                 {
-                    "role": "user",
-                    "content": prompt,
+                    "filename": chunk.filename or "Unknown",
+                    "page": chunk.page or 0,
+                    "score": chunk.score,
                 }
-            ],
-            stream=True,
-        )
+                for chunk in chunks
+            ]
 
-        for chunk in response:
-            delta = chunk.choices[0].delta.content
+            response = self.client.chat.completions.create(
+                model=settings.CHAT_MODEL,
+                messages=[
+                    {
+                        "role": "user",
+                        "content": prompt,
+                    }
+                ],
+                stream=True,
+            )
 
-            if delta:
-                yield (
-                    f"data: "
-                    f"{json.dumps({'token': delta})}\n\n"
-                )
+            for chunk in response:
+                delta = chunk.choices[0].delta.content
 
-        yield (
-            f"data: "
-            f"{json.dumps({
-                'done': True,
-                'sources': sources,
+                if delta:
+                    yield (
+                        f"data: "
+                        f"{json.dumps({'token': delta})}\n\n"
+                    )
+
+            yield (
+                f"data: "
+                f"{json.dumps({
+                    'done': True,
+                    'sources': sources,
+                })}\n\n"
+            )
+        
+        except Exception as e:
+            print(f"Streaming chat failed: {e}", flush=True)
+
+            yield f"data: {json.dumps({
+                'error': 'Failed to generate response'
             })}\n\n"
-        )

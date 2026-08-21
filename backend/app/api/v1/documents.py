@@ -1,4 +1,4 @@
-from fastapi import APIRouter, UploadFile
+from fastapi import APIRouter, UploadFile, BackgroundTasks, HTTPException
 
 from app.models.document import DocumentResponse, DocumentListResponse
 from app.services.document_service import document_service
@@ -27,8 +27,22 @@ async def list_documents():
 
 
 @router.post("/upload", response_model=DocumentResponse)
-async def upload_document(file: UploadFile):
+async def upload_document(file: UploadFile, background_tasks: BackgroundTasks,):
+    if not file.filename:
+        raise HTTPException(status_code=400, detail="Filename is required")
+    
+    if file.content_type != "application/pdf":
+        raise HTTPException(
+            status_code=400, detail="Only PDF files are supported"
+        )
+    
     document = document_service.upload_document(file)
+    
+    background_tasks.add_task(
+        document_service.process_document,
+        document.id
+    )
+    
     return DocumentResponse(
         id=document.id,
         filename=document.original_filename,
@@ -39,7 +53,12 @@ async def upload_document(file: UploadFile):
 
 @router.delete("/{document_id}")
 async def delete_document(document_id: str):
+    
     success = document_service.delete_document(document_id)
-    if success:
-        return {"message": "Document deleted successfully"}
-    return {"message": "Document not found"}, 404
+    if not success:
+        raise HTTPException(
+            status_code=404,
+            detail="Document not found",
+        )
+
+    return {"message": "Document deleted successfully"}

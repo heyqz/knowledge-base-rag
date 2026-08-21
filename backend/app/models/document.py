@@ -4,9 +4,10 @@ from enum import Enum
 
 
 class DocumentStatus(str, Enum):
-    INDEXED = "indexed"
     UPLOADED = "uploaded"
-
+    PROCESSING = "processing"
+    INDEXED = "indexed"
+    FAILED = "failed"
 
 class Document(BaseModel):
     id: str
