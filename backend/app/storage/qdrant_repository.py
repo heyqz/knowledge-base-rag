@@ -13,6 +13,7 @@ class QdrantRepository(VectorRepository):
     def __init__(self, client: QdrantClient | None = None):
         self.client = client or QdrantClient(
             url=settings.QDRANT_URL,
+             api_key=settings.QDRANT_API_KEY,
         )
 
         self.collection_name = settings.QDRANT_COLLECTION

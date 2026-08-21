@@ -13,6 +13,7 @@ class Settings(BaseSettings):
     #QDRANT settings
     QDRANT_URL: str
     QDRANT_COLLECTION: str
+    QDRANT_API_KEY: str
     EMBED_DIM: int
     
     # Storage settings
