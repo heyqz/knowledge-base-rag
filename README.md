@@ -1,3 +1,9 @@
+## Demo
+
+**Live Demo:** https://knowledge-base-rag-ten.vercel.app/
+
+**API Docs:** https://knowledge-base-rag-9fb4.onrender.com/docs
+
 # 📚 AI Knowledge Base
 
 A production-style document question-answering application that allows users to upload PDF documents, ask natural-language questions, and receive answers grounded in the uploaded documents with source attribution.
