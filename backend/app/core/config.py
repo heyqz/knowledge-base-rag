@@ -4,7 +4,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 class Settings(BaseSettings):
     # Environment
     ENVIRONMENT: str = "development"
-    FRONTEND_URL: str = "http://localhost:5173"
+    FRONTEND_URL: str = "https://knowledge-base-rag-ten.vercel.app/"
     # API Keys
     OPENAI_API_KEY: str 
     EMBEDDING_MODEL: str

@@ -1,4 +1,4 @@
-from qdrant_client import QdrantClient
+from qdrant_client import QdrantClient, models
 from qdrant_client.models import Distance, VectorParams, PointStruct
 from qdrant_client.models import Filter, FieldCondition, MatchValue
 
@@ -21,19 +21,23 @@ class QdrantRepository(VectorRepository):
         self._ensure_collection()
 
     def _ensure_collection(self) -> None:
-        """Create the collection if it does not exist."""
+        """Create the collection and required payload indexes."""
 
-        if self.client.collection_exists(
+        if not self.client.collection_exists(
             collection_name=self.collection_name
         ):
-            return
+            self.client.create_collection(
+                collection_name=self.collection_name,
+                vectors_config=VectorParams(
+                    size=settings.EMBED_DIM,
+                    distance=Distance.COSINE,
+                ),
+            )
 
-        self.client.create_collection(
+        self.client.create_payload_index(
             collection_name=self.collection_name,
-            vectors_config=VectorParams(
-                size=settings.EMBED_DIM,
-                distance=Distance.COSINE,
-            ),
+            field_name="document_id",
+            field_schema=models.PayloadSchemaType.KEYWORD,
         )
 
     def upsert(self,ids: list[str],vectors: list[list[float]], payloads: list[dict]) -> None:
