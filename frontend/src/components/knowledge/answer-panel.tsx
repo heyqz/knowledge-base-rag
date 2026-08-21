@@ -67,9 +67,9 @@ export function AnswerPanel() {
   }
 
   return (
-    <div className="flex h-full flex-col">
-      <div className="flex-1 overflow-y-auto p-10">
-        <div className="mx-auto max-w-4xl">
+    <div className="flex h-full min-h-0 flex-col">
+      <div className="min-h-0 flex-1 overflow-y-auto">
+        <div className="mx-auto max-w-4xl px-6 py-6">
           <h2 className="text-4xl font-bold">AI Knowledge Assistant</h2>
 
           {messages.length === 0 ? (
@@ -79,7 +79,10 @@ export function AnswerPanel() {
           )}
         </div>
       </div>
-      <ChatInput onQuestionSubmit={handleQuestionSubmit} />
+
+      <div className="shrink-0 border-t bg-background">
+        <ChatInput onQuestionSubmit={handleQuestionSubmit} />
+      </div>
     </div>
   );
 }
