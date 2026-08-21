@@ -2,12 +2,14 @@ services:
   backend:
     build:
       context: ./backend
+      args:
+        INSTALL_RERANKER: "true"
     container_name: knowledge-rag-backend
     env_file:
       - ./backend/.env
     environment:
       QDRANT_URL: http://qdrant:6333
-      
+
     ports:
       - "8000:8000"
     volumes:

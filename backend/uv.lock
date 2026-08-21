@@ -165,13 +165,15 @@ dependencies = [
     { name = "python-multipart" },
     { name = "qdrant-client" },
     { name = "rank-bm25" },
-    { name = "sentence-transformers" },
     { name = "uvicorn" },
 ]
 
 [package.dev-dependencies]
 dev = [
     { name = "pytest" },
+]
+reranker = [
+    { name = "sentence-transformers" },
 ]
 
 [package.metadata]
@@ -189,12 +191,12 @@ requires-dist = [
     { name = "python-multipart", specifier = ">=0.0.32" },
     { name = "qdrant-client", specifier = ">=1.19.0" },
     { name = "rank-bm25", specifier = ">=0.2.2" },
-    { name = "sentence-transformers", specifier = ">=6.0.0" },
     { name = "uvicorn", specifier = ">=0.52.3" },
 ]
 
 [package.metadata.requires-dev]
 dev = [{ name = "pytest", specifier = ">=9.1.1" }]
+reranker = [{ name = "sentence-transformers", specifier = ">=6.0.0" }]
 
 [[package]]
 name = "certifi"
