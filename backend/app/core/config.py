@@ -12,9 +12,9 @@ class Settings(BaseSettings):
     
     #QDRANT settings
     QDRANT_URL: str
-    QDRANT_COLLECTION: str
+    QDRANT_COLLECTION: str = "knowledge-base"
     QDRANT_API_KEY: str
-    EMBED_DIM: int
+    EMBED_DIM: int =3072
     
     # Storage settings
     SQLITE_PATH: str = "storage/metadata.db"

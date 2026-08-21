@@ -6,6 +6,10 @@ from app.core.config import settings
 class Database:
     def __init__(self):
         self.db_path = settings.SQLITE_PATH
+        self.db_path.parent.mkdir(
+            parents=True,
+            exist_ok=True,
+        )
 
     def execute(self, query: str, params=()):
         with sqlite3.connect(self.db_path) as conn:
