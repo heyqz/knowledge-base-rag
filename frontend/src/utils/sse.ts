@@ -1,5 +1,5 @@
 import type { StreamCallbacks } from "@/types/stream";
-import type { ChatResponse, Source } from "@/types/chat";
+import type { Source } from "@/types/chat";
 
 export interface StreamEvent {
   token?: string;

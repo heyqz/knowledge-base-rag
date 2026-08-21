@@ -11,6 +11,9 @@ class BM25Index:
 
     def build(self, chunks: list[RetrievedChunk]) -> None:
         self.chunks = chunks
+        if not chunks:
+            self.bm25 = None
+            return
 
         tokenized_chunks = [
             self._tokenize(chunk.text)
@@ -20,7 +23,7 @@ class BM25Index:
         self.bm25 = BM25Okapi(tokenized_chunks)
 
     def is_ready(self) -> bool:
-        return self.bm25 is not None
+        return self.bm25 is not None and bool(self.chunks)
 
     @staticmethod
     def _tokenize(text: str) -> list[str]:
