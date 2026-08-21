@@ -26,6 +26,7 @@ node_modules/
 
 # Uploads & test data
 uploads/
+storage/uploads/
 test_data/
 storage/ocr/
 
@@ -34,4 +35,5 @@ qdrant_storage/
 
 # Build
 dist/
+dist-ssr/
 build/

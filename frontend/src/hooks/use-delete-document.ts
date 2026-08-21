@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { deleteDocument } from "@/services/document";
+import { queryKeys } from "@/lib/query-keys";
 
 export function useDeleteDocument() {
   const queryClient = useQueryClient();
@@ -10,7 +11,7 @@ export function useDeleteDocument() {
 
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["documents"],
+        queryKey: queryKeys.documents,
       });
     },
   });
