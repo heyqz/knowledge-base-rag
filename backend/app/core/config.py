@@ -24,6 +24,7 @@ class Settings(BaseSettings):
     CHUNK_SIZE: int = 1000
     CHUNK_OVERLAP: int = 200
     TOP_K: int = 5
+    ENABLE_RERANKER: bool = True
 
     model_config = SettingsConfigDict(
         env_file=".env",

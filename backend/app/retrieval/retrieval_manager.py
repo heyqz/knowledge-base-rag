@@ -2,9 +2,9 @@ from app.retrieval.bm25_index import BM25Index
 from app.retrieval.bm25_retriever import BM25Retriever
 from app.retrieval.dense_retriever import DenseRetriever
 from app.retrieval.hybrid_retriever import HybridRetriever
-from app.retrieval.reranker import Reranker
 from app.models.retrieved_chunk import RetrievedChunk
 from app.storage.qdrant_repository import QdrantRepository
+from app.core.config import settings
 
 
 class RetrievalManager:
@@ -29,7 +29,12 @@ class RetrievalManager:
             dense_retriever=self.dense_retriever,
             bm25_retriever=self.bm25_retriever,
         )
-        self.reranker = Reranker()
+        if settings.ENABLE_RERANKER:
+            from app.retrieval.reranker import Reranker
+
+            self.reranker = Reranker()
+        else:
+            self.reranker = None
 
     def refresh(self) -> None:
         chunks = self.repository.get_all_chunks()
@@ -56,6 +61,9 @@ class RetrievalManager:
             candidate_k=candidate_k,
         )
 
+        if self.reranker is None:
+            return candidates[:top_k]
+        
         return self.reranker.rerank(
             question,
             candidates,
