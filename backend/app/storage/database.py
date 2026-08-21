@@ -1,11 +1,12 @@
 import sqlite3
+from pathlib import Path
 
 from app.core.config import settings
 
 
 class Database:
     def __init__(self):
-        self.db_path = settings.SQLITE_PATH
+        self.db_path = Path(settings.SQLITE_PATH)
         self.db_path.parent.mkdir(
             parents=True,
             exist_ok=True,
